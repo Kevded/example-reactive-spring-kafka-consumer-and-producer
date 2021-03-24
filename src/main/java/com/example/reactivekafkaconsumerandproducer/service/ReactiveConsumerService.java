@@ -32,7 +32,7 @@ public class ReactiveConsumerService implements CommandLineRunner {
                 )
                 .map(ConsumerRecord::value)
                 .doOnNext(fakeConsumerDTO -> log.info("successfully consumed {}={}", FakeConsumerDTO.class.getSimpleName(), fakeConsumerDTO))
-                .doOnError(throwable -> log.error("something bad happenned while consuming : {}", throwable.getMessage()));
+                .doOnError(throwable -> log.error("something bad happened while consuming : {}", throwable.getMessage()));
     }
 
     @Override
