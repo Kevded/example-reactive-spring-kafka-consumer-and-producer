@@ -11,7 +11,7 @@ import reactor.core.publisher.Flux;
 
 
 @Service
-public class ReactiveConsumerService implements CommandLineRunner {
+public class ReactiveConsumerService /*implements CommandLineRunner*/ {
     Logger log = LoggerFactory.getLogger(ReactiveConsumerService.class);
 
     private final ReactiveKafkaConsumerTemplate<String, FakeConsumerDTO> reactiveKafkaConsumerTemplate;
@@ -20,7 +20,7 @@ public class ReactiveConsumerService implements CommandLineRunner {
         this.reactiveKafkaConsumerTemplate = reactiveKafkaConsumerTemplate;
     }
 
-    private Flux<FakeConsumerDTO> consumeFakeConsumerDTO() {
+    public Flux<FakeConsumerDTO> consumeFakeConsumerDTO() {
         return reactiveKafkaConsumerTemplate
                 .receiveAutoAck()
                 // .delayElements(Duration.ofSeconds(2L)) // BACKPRESSURE
@@ -35,7 +35,7 @@ public class ReactiveConsumerService implements CommandLineRunner {
                 .doOnError(throwable -> log.error("something bad happened while consuming : {}", throwable.getMessage()));
     }
 
-    @Override
+    // @Override
     public void run(String... args) {
         // we have to trigger consumption
         consumeFakeConsumerDTO().subscribe();
